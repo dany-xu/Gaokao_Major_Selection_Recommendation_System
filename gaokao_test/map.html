@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <link href="mystyle.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+    </script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <style type="text/css">
+        html,
+        body,
+        .map {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+        }
+        
+        .amap-copyright {
+            color: grey
+        }
+    </style>
+    <title>高德简易行政区地图</title>
+</head>
+
+<body>
+    <div id="container" class="map" tabindex="0">
+        <!-- <a href="test.html">地域选择</a> -->
+
+    </div>
+
+    <script language="javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=0a1ee845d4a7299bc94b6985a50c8d47&plugin=Map3D,AMap.DistrictLayer,AMap.Scale,AMap.ToolBar"></script>
+
+    <div class="info" id="text">
+        请用鼠标在地图上操作试试
+    </div>
+
+    <!-- <div class="input-card" style="width:16rem">
+        <h4>地图点击相关事件</h4>
+        <div>
+            <div class="input-item">
+                <button id="clickOn" class="btn" style="margin-right:1rem;">绑定事件</button>
+                <button id="clickOff" class="btn">解绑事件</button>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- 加载地图JSAPI脚本 -->
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=0a1ee845d4a7299bc94b6985a50c8d47"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script>
+        //地理编码转换
+        function regeoCode() {
+
+            var lnglat = document.getElementById('lnglat').value.split(',');
+            // map.add(marker);
+            marker.setPosition(lnglat);
+
+            geocoder.getAddress(lnglat, function(status, result) {
+                if (status === 'complete' && result.regeocode) {
+                    var address = result.regeocode.formattedAddress;
+                    document.getElementById('address').value = address;
+                } else {
+                    log.error('根据经纬度查询地址失败')
+                }
+            });
+        }
+
+        var SOC = 'CHN'
+        var colors = {};
+        var GDPSpeed = {
+            '520000': 0, //贵州
+            '540000': 0, //西藏
+            '530000': 0, //云南 
+            '500000': 0, //重庆
+            '360000': 0, //江西
+            '340000': 0, //安徽
+            '510000': 0, //四川
+            '350000': 0, //福建
+            '430000': 0, //湖南
+            '420000': 0, //湖北
+            '410000': 0, //河南
+            '330000': 0, //浙江
+            '640000': 0, //宁夏
+            '650000': 0, //新疆
+            '440000': 0, //广东
+            '370000': 0, //山东
+            '450000': 0, //广西
+            '630000': 0, //青海
+            '320000': 0, //江苏
+            '140000': 0, //山西
+            '460000': 0, // 海南
+            '310000': 0, //上海
+            '110000': 0, // 北京
+            '130000': 0, // 河北
+            '230000': 0, // 黑龙江
+            '220000': 0, // 吉林
+            '210000': 0, //辽宁
+            '150000': 0, //内蒙古
+            '120000': 0, // 天津
+            '620000': 0, // 甘肃
+            '610000': 0, // 甘肃
+            '710000': 0, //台湾
+            '810000': 0, //香港
+            '820000': 0 //澳门
+
+        }
+
+        //染色函数
+        var getColorByDGP = function(adcode) {
+            if (!colors[adcode]) {
+                var gdp = GDPSpeed[adcode];
+                if (!gdp) {
+                    colors[adcode] = 'rgb(227,227,227)'
+                } else {
+                    var rg = 255 - Math.floor((gdp - 5) / 5 * 255);
+                    colors[adcode] = 'rgb(' + rg + ',' + rg + ',255)';
+                }
+            }
+            return colors[adcode]
+        }
+
+        var disCountry = new AMap.DistrictLayer.Country({
+            zIndex: 10,
+            SOC: 'CHN',
+            depth: 2,
+            styles: {
+                'nation-stroke': '#22ffff',
+                'coastline-stroke': [0.85, 0.63, 0.94, 1],
+                'province-stroke': 'white',
+                'city-stroke': 'rgba(255,255,255,0.15)', //中国特有字段
+                'fill': function(props) { //中国特有字段
+                    return getColorByDGP(props.adcode_pro)
+                }
+            }
+        })
+
+
+        var map = new AMap.Map("container", {
+            zooms: [3, 10],
+            showIndoorMap: false,
+            zoom: 3,
+            isHotspot: false,
+            defaultCursor: 'pointer',
+            touchZoomCenter: 1,
+            pitch: 0,
+            layers: [
+                disCountry, //
+                new AMap.TileLayer.Satellite()
+            ],
+            //viewMode:'3D',
+            resizeEnable: true
+        })
+        map.addControl(new AMap.Scale());
+        map.addControl(new AMap.ToolBar({
+            liteStyle: true
+        }));
+        map.on('complete', function() {
+            document.getElementsByClassName('amap-mcode')[0].innerHTML = '-GS(2020)617号、GS(2019)756号'
+        })
+
+        function showInfoClick(e) {
+            // var text = '您在 [ ' + e.lnglat.getLng() + ',' + e.lnglat.getLat() + ' ] 的位置单击了地图！'
+            var text = '您确实在 [ ' + e.lnglat + ' ] 的位置单击了地图！'
+
+            document.querySelector("#text").innerText = text;
+        }
+
+        function showInfoDbClick(e) {
+            // var text = '您在 [ ' + e.lnglat.getLng() + ',' + e.lnglat.getLat() + ' ] 的位置双击了地图！'
+            var text = '您在 [ ' + e.lnglat + ' ] 的位置双击了地图！'
+
+            document.querySelector("#text").innerText = text;
+        }
+
+        function showInfoMove() {
+            var text = '您移动了您的鼠标！'
+            document.querySelector("#text").innerText = text;
+        }
+
+
+        map.on('click', showInfoClick);
+        map.on('dblclick', showInfoDbClick);
+        map.on('mousemove', showInfoMove);
+
+
+
+        // 同时也可以对群组进行统一的展示隐藏操作
+
+        // overlayGroup.show();
+
+        var regionSelected = {
+            'province': '江苏',
+            'city': '南京'
+        }
+
+        localStorage.regionSelected = regionSelected.province
+        console.log(localStorage.regionSelected)
+    </script>
+
+
+
+</body>
+
+</html>

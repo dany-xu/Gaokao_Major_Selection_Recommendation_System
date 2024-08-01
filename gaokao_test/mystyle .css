@@ -1,0 +1,268 @@
+/* * {
+    box-sizing: border-box;
+} */
+
+body {
+    background-color: rgb(253, 230, 136);
+    margin: 0;
+    padding: 0;
+    height: 100%
+}
+
+
+/* 
+.header {
+    background-color: rgb(139, 200, 224);
+    color: cornsilk;
+    text-align: left;
+    padding: 20px;
+} */
+
+.header .main-nav-item sample {
+    color: rgb(86, 131, 168);
+}
+
+
+/*23魔方导航条*/
+
+a[data-v-315d6e92] {
+    color: inherit;
+    text-decoration: none;
+}
+
+.main-nav-link[data-v-315d6e92] {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #fff;
+    word-break: keep-all;
+    white-space: nowrap;
+    /* float: left; */
+}
+
+.main-header[data-v-315d6e92] {
+    /* display: block; */
+    /* float: left; */
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+li {
+    display: list-item;
+    display: inline;
+    /* text-align: -webkit-match-parent; */
+    /* display: block; */
+    /* float: left; */
+}
+
+a[data-v-315d6e92],
+button[data-v-315d6e92],
+input[data-v-315d6e92] {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.main-nav-item[data-v-315d6e92] {
+    position: relative;
+    padding: 20px 15px;
+}
+
+
+/*导航条*/
+
+.topnav {
+    overflow: auto;
+    background-color: rgb(139, 200, 224);
+    /*padding-left: 14px;*/
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: cornsilk;
+    text-align: start;
+    padding: 30px 50px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: rgb(134, 158, 192);
+    color: rgb(253, 215, 63);
+    /*opacity:0.6;*/
+}
+
+
+/*创建两个列*/
+
+.column {
+    float: left;
+    /*padding:20px;*/
+}
+
+.column.main {
+    width: 83%;
+    padding: 3%;
+}
+
+.column.side {
+    width: 8%;
+    padding: 3%;
+    padding-left: 0%;
+}
+
+
+/*地图尺寸*/
+
+#container {
+    height: 800px;
+    width: 100%;
+}
+
+.amap-icon img,
+.amap-marker-content img {
+    width: 25px;
+    height: 34px;
+}
+
+.marker {
+    position: absolute;
+    top: -20px;
+    right: -118px;
+    color: #fff;
+    padding: 4px 10px;
+    box-shadow: 1px 1px 1px rgba(10, 10, 10, .2);
+    white-space: nowrap;
+    font-size: 12px;
+    font-family: "";
+    background-color: #25A5F7;
+    border-radius: 3px;
+}
+
+.infor {
+    /* position: relative;
+    top: 10px;
+    display: block; */
+    margin-bottom: 5%;
+    width: 10rem;
+    height: 25rem;
+    z-index: 170;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: .25rem;
+    width: 22rem;
+    border-width: 0;
+    border-radius: 0.4rem;
+    box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0.75rem 1.25rem;
+}
+
+.infor-show {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+}
+
+.input-card {
+    position: relative;
+    top: 10px;
+    display: block;
+    margin-bottom: 10%;
+    width: 10rem;
+    height: 25rem;
+    z-index: 170;
+}
+
+.input-card .btn {
+    margin-right: .8rem;
+    margin-bottom: 10%;
+    margin-left: 30%;
+    font-size: 16px;
+}
+
+.input-card .btn:last-child {
+    margin-right: 0;
+}
+
+
+/*列后面消除浮动*/
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/*响应式布局*/
+
+@media screen and (max-width:600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+
+/* .btn-group {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    position: fixed;
+    padding-top: 40px;
+}
+
+.btn-group button {
+    background-color: rgb(4, 48, 113);
+    color: cornsilk;
+    
+    border: 10px solid;
+    padding: 10px 24px;
+    cursor: pointer;
+    width: 100%;
+    font-size: large;
+} */
+
+
+/*.btn-group button:not(:last-child){
+    border-bottom:none;
+}*/
+
+.btn-group button:hover {
+    opacity: 0.6;
+}
+
+.footer {
+    background-color: rgb(139, 200, 224);
+    color: cornsilk;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    /* bottom:0px; */
+}
+
+.footer a {
+    color: cornsilk;
+}
+
+.footer a:hover {
+    color: rgb(253, 215, 63);
+}

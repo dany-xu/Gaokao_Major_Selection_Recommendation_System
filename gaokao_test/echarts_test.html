@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>人格分析结果</title>
+    <!-- 引入 echarts.js -->
+    <!-- <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script> -->
+    <script src="echarts.js"></script>
+    <style>
+        #log {
+            background-color: rgb(255, 255, 255);
+            width: 400px;
+            /* height: 500px; */
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            margin-top: 10%;
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            series: [{
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                data: [{
+                    value: 8,
+                    name: '现实型'
+                }, {
+                    value: 6,
+                    name: '研究型'
+                }, {
+                    value: 2,
+                    name: '艺术型'
+                }, {
+                    value: 7,
+                    name: '社会型'
+                }, {
+                    value: 5,
+                    name: '企业型'
+                }, {
+                    value: 6,
+                    name: '常规型'
+                }],
+                roseType: 'angle',
+                itemStyle: {
+                    normal: {
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>

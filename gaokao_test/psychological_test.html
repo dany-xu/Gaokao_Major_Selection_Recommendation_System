@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="echarts.js"></script>
+    <script src="vue.js"></script>
+
+
+    <title>霍兰德职业兴趣测试</title>
+    <style>
+        body {
+            background-image: url('picture_sketch.jpg');
+            width: 100%;
+            height: 100%;
+            background-size: 100%;
+        }
+        
+        .test1 {
+            background-color: rgb(255, 255, 255);
+            width: 400px;
+            /* height: 500px; */
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            /* margin-top: 10%; */
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 15px;
+            font-weight: bold;
+        }
+        
+        .test_jump {
+            font-size: 20px;
+            float: left;
+        }
+        
+        #show1 {
+            position: fixed;
+            top: 30px;
+            right: 500px;
+        }
+        
+        #show2 {
+            position: fixed;
+            top: 30px;
+            right: 500px;
+        }
+        
+        #show3 {
+            position: fixed;
+            top: 30px;
+            right: 500px;
+        }
+        
+        #show4 {
+            position: fixed;
+            top: 30px;
+            right: 500px;
+        }
+        
+        #show5 {
+            position: fixed;
+            top: 30px;
+            right: 500px;
+        }
+        
+        #show6 {
+            position: fixed;
+            top: 30px;
+            right: 500px;
+        }
+        
+        #main {
+            /* 定位 */
+            position: fixed;
+            top: 25px;
+            right: 700px;
+            /* float: left; */
+            /* 样式 */
+            background-color: rgb(255, 255, 255);
+            width: 400px;
+            /* height: 500px; */
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            margin-top: 10%;
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #major_infor {
+            position: fixed;
+            top: 25px;
+            right: 100px;
+            background-color: rgb(255, 255, 255);
+            width: 300px;
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            margin-top: 10%;
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #goback {
+            float: left;
+        }
+    </style>
+</head>
+
+<body style="overflow-x: auto;overflow-y: auto;">
+    <div id="app">
+        <div class="test1" id="show1">
+            <div>
+                <!-- 现实型 -->
+                <form>
+                    <label>下面列举了若干种活动，请就这些活动判断你的喜好</label><br>
+                    <label>1、是否对装配修理电器或玩具感兴趣</label><br>
+                    <input type="radio" name="q1" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q1" value="0">否<br>
+                    <label>2、是否对修理工作感兴趣</label><br>
+                    <input type="radio" name="q2" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q2" value="0">否<br>
+                    <label>3、是否对使用木材制作工具感兴趣</label><br>
+                    <input type="radio" name="q3" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q3" value="0">否<br>
+                    <label>4、是否对驾驶交通工具感兴趣</label><br>
+                    <input type="radio" name="q4" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q4" value="0">否<br>
+                    <label>5、是否对使用机器制作物品感兴趣</label><br>
+                    <input type="radio" name="q5" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q5" value="0">否<br>
+
+                    <label>6、是否对参加制图描图学习班感兴趣</label><br>
+                    <input type="radio" name="q6" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q6" value="0">否<br>
+                    <label>7、是否对机械和电气学习感兴趣</label><br>
+                    <input type="radio" name="q7" value="1" onclick="app.add1()" checked="checked">是
+                    <input type="radio" name="q7" value="0">否<br>
+                    <label>8、是否对装配修理机器感兴趣</label><br>
+                    <input type="radio" name="q8" value="1" onclick="app.add1()">是
+                    <input type="radio" name="q8" value="0" checked="checked">否<br>
+                    <label>9、是否对操作大型器械感兴趣</label><br>
+                    <input type="radio" name="q9" value="1" onclick="app.add1()">是
+                    <input type="radio" name="q9" value="0" checked="checked">否<br>
+                    <label>10、是否对工匠类学习感兴趣</label><br>
+                    <input type="radio" name="q10" value="1" onclick="app.add1()">是
+                    <input type="radio" name="q10" value="0" checked="checked">否<br>
+
+
+                    <br>
+                    <input type="button" class="test_jump" onclick="jump1()" value="下一页">
+
+                </form>
+            </div>
+        </div>
+        <div class="test1 " id="show2">
+            <!-- 研究型 -->
+            <div>
+                <form>
+                    <label>1、是否对读科技图书和杂志感兴趣</label><br>
+                    <input type="radio" name="q1" value="1" onclick="app.add2()" checked="checked">是
+                    <input type="radio" name="q1" value="0">否<br>
+                    <label>2、是否对在实验室工作感兴趣</label><br>
+                    <input type="radio" name="q2" value="1" onclick="app.add2()" checked="checked">是
+                    <input type="radio" name="q2" value="0">否<br>
+                    <label>3、是否对改良水果品种，培育新的水果感兴趣</label><br>
+                    <input type="radio" name="q3" value="1" onclick="app.add2()" checked="checked">是
+                    <input type="radio" name="q3" value="0">否<br>
+                    <label>4、是否对调查了解土和金属等物质的成分感兴趣</label><br>
+                    <input type="radio" name="q4" value="1" onclick="app.add2()" checked="checked">是
+                    <input type="radio" name="q4" value="0">否<br>
+                    <label>5、是否对研究自己选择的特殊问题感兴趣</label><br>
+                    <input type="radio" name="q5" value="1" onclick="app.add2()" checked="checked">是
+                    <input type="radio" name="q5" value="0">否<br>
+
+                    <label>6、是否对解算术或玩数学游戏感兴趣</label><br>
+                    <input type="radio" name="q6" value="1" onclick="app.add2()" checked="checked">是
+                    <input type="radio" name="q6" value="0">否<br>
+                    <label>7、是否对物理课感兴趣</label><br>
+                    <input type="radio" name="q7" value="1" onclick="app.add2()">是
+                    <input type="radio" name="q7" value="0" checked="checked">否<br>
+                    <label>8、是否对化学课感兴趣</label><br>
+                    <input type="radio" name="q8" value="1" onclick="app.add2()">是
+                    <input type="radio" name="q8" value="0" checked="checked">否<br>
+                    <label>9、是否对几何课感兴趣</label><br>
+                    <input type="radio" name="q9" value="1" onclick="app.add2()">是
+                    <input type="radio" name="q9" value="0" checked="checked">否<br>
+                    <label>10、是否对生物实验感兴趣</label><br>
+                    <input type="radio" name="q10" value="1" onclick="app.add2()">是
+                    <input type="radio" name="q10" value="0" checked="checked">否<br>
+                    <br>
+                    <input type="button" class="test_jump" onclick="jump2()" value="下一页">
+
+
+                </form>
+            </div>
+        </div>
+
+        <div class="test1 " id="show3">
+            <div>
+                <!-- 艺术型 -->
+                <form>
+                    <label>1、是否对素描、制图或绘画感兴趣</label><br>
+                    <input type="radio" name="q1" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q1" value="0">否<br>
+
+                    <label>2、是否对参加话剧/戏剧感兴趣</label><br>
+                    <input type="radio" name="q2" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q2" value="0">否<br>
+                    <label>3、是否对设计家具/布置室内感兴趣</label><br>
+                    <input type="radio" name="q3" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q3" value="0">否<br>
+                    <label>4、是否对练习乐器/参加乐队感兴趣</label><br>
+                    <input type="radio" name="q4" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q4" value="0">否<br>
+                    <label>5、是否对欣赏音乐或戏剧感兴趣</label><br>
+                    <input type="radio" name="q5" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q5" value="0">否<br>
+
+                    <label>6、是否对读小说/剧本感兴趣</label><br>
+                    <input type="radio" name="q6" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q6" value="0">否<br>
+                    <label>7、是否对从事摄影创作感兴趣</label><br>
+                    <input type="radio" name="q7" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q7" value="0">否<br>
+                    <label>8、是否对写诗或吟诗感兴趣</label><br>
+                    <input type="radio" name="q8" value="1" onclick="app.add3()" checked="checked">是
+                    <input type="radio" name="q8" value="0">否<br>
+                    <label>9、是否对参加艺术(美术/音乐)培训感兴趣</label><br>
+                    <input type="radio" name="q9" value="1" onclick="app.add3()">是
+                    <input type="radio" name="q9" value="0" checked="checked">否<br>
+                    <label>10、是否对练习书法感兴趣</label><br>
+                    <input type="radio" name="q10" value="1" onclick="app.add3()">是
+                    <input type="radio" name="q10" value="0" checked="checked">否<br>
+                    <br>
+                    <input type="button" class="test_jump" onclick="jump3()" value="下一页">
+
+
+                </form>
+            </div>
+        </div>
+        <div class="test1 " id="show4">
+            <div>
+                <!-- 社会型 -->
+                <form>
+                    <label>1、是否对学校或单位组织的正式活动感兴趣</label><br>
+                    <input type="radio" name="q1" value="1" onclick="app.add4()" checked="checked">是
+                    <input type="radio" name="q1" value="0">否<br>
+                    <label>2、是否对参加某个社会团体或俱乐部活动感兴趣</label><br>
+                    <input type="radio" name="q2" value="1" onclick="app.add4()" checked="checked">是
+                    <input type="radio" name="q2" value="0">否<br>
+                    <label>3、是否对帮助别人解决困难感兴趣</label><br>
+                    <input type="radio" name="q3" value="1" onclick="app.add4()" checked="checked">是
+                    <input type="radio" name="q3" value="0">否<br>
+                    <label>4、是否对照顾儿童感兴趣</label><br>
+                    <input type="radio" name="q4" value="1" onclick="app.add4()" checked="checked">是
+                    <input type="radio" name="q4" value="0">否<br>
+                    <label>5、是否对出席晚会、联欢会、茶话会感兴趣</label><br>
+                    <input type="radio" name="q5" value="1" onclick="app.add4()">是
+                    <input type="radio" name="q5" value="0" checked="checked">否<br>
+
+                    <label>6、是否对和大家一起出去郊游感兴趣</label><br>
+                    <input type="radio" name="q6" value="1" onclick="app.add4()">是
+                    <input type="radio" name="q6" value="0" checked="checked">否<br>
+                    <label>7、是否对想获得关于心理方面的知识感兴趣</label><br>
+                    <input type="radio" name="q7" value="1" onclick="app.add4()">是
+                    <input type="radio" name="q7" value="0" checked="checked">否<br>
+                    <label>8、是否对参加讲座会或辩论会感兴趣</label><br>
+                    <input type="radio" name="q8" value="1" onclick="app.add4()">是
+                    <input type="radio" name="q8" value="0" checked="checked">否<br>
+                    <label>9、是否对观看或参加体育比赛和运动会感兴趣</label><br>
+                    <input type="radio" name="q9" value="1" onclick="app.add4()">是
+                    <input type="radio" name="q9" value="0" checked="checked">否<br>
+                    <label>10、是否对结交新朋友感兴趣</label><br>
+                    <input type="radio" name="q10" value="1" onclick="app.add4()">是
+                    <input type="radio" name="q10" value="0" checked="checked">否<br>
+                    <br>
+                    <input type="button" class="test_jump" onclick="jump4()" value="下一页">
+
+                </form>
+            </div>
+        </div>
+        <div class="test1 " id="show5">
+            <div>
+                <!-- 企业型 -->
+                <form>
+                    <label>1、是否对贩卖物品感兴趣</label><br>
+                    <input type="radio" name="q1" value="1" onclick="app.add5()" checked="checked">是
+                    <input type="radio" name="q1" value="0">否<br>
+                    <label>2、是否对说服/鼓动他人感兴趣</label><br>
+                    <input type="radio" name="q2" value="1" onclick="app.add5()">是
+                    <input type="radio" name="q2" value="0" checked="checked">否<br>
+                    <label>3、是否对谈论政治感兴趣</label><br>
+                    <input type="radio" name="q3" value="1" onclick="app.add5()" checked="checked">是
+                    <input type="radio" name="q3" value="0">否<br>
+                    <label>4、是否对制定计划、参加会议感兴趣</label><br>
+                    <input type="radio" name="q4" value="1" onclick="app.add5()" checked="checked">是
+                    <input type="radio" name="q4" value="0">否<br>
+                    <label>5、是否对以自己的意志影响别人的行为感兴趣</label><br>
+                    <input type="radio" name="q5" value="1" onclick="app.add5()" checked="checked">是
+                    <input type="radio" name="q5" value="0">否<br>
+
+                    <label>6、是否对在社会团体中担任职务感兴趣</label><br>
+                    <input type="radio" name="q6" value="1" onclick="app.add5()">是
+                    <input type="radio" name="q6" value="0" checked="checked">否<br>
+                    <label>7、是否对结交比自己某些方面优秀的人感兴趣</label><br>
+                    <input type="radio" name="q7" value="1" onclick="app.add5()">是
+                    <input type="radio" name="q7" value="0" checked="checked">否<br>
+                    <label>8、是否对检查与评价别人的工作感兴趣</label><br>
+                    <input type="radio" name="q8" value="1" onclick="app.add5()">是
+                    <input type="radio" name="q8" value="0" checked="checked">否<br>
+                    <label>9、是否对指导有某种目标的团体感兴趣</label><br>
+                    <input type="radio" name="q9" value="1" onclick="app.add5()">是
+                    <input type="radio" name="q9" value="0" checked="checked">否<br>
+                    <label>10、是否对参与集体活动感兴趣</label><br>
+                    <input type="radio" name="q10" value="1" onclick="app.add5()" checked="checked">是
+                    <input type="radio" name="q10" value="0">否<br>
+                    <br>
+                    <input type="button" class="test_jump" onclick="jump5()" value="下一页">
+
+
+                </form>
+            </div>
+        </div>
+        <div class="test1 " id="show6">
+            <div>
+                <!-- 常规型 -->
+                <form>
+                    <label>1、是否对整理好桌面和房间感兴趣</label><br>
+                    <input type="radio" name="q1" value="1" onclick="app.add6()" checked="checked">是
+                    <input type="radio" name="q1" value="0">否<br>
+                    <label>2、是否对抄写文件和信件感兴趣</label><br>
+                    <input type="radio" name="q2" value="1" onclick="app.add6()" checked="checked">是
+                    <input type="radio" name="q2" value="0">否<br>
+                    <label>3、是否对为领导写报告或公务信函感兴趣</label><br>
+                    <input type="radio" name="q3" value="1" onclick="app.add6()" checked="checked">是
+                    <input type="radio" name="q3" value="0">否<br>
+                    <label>4、是否有检查个人每月收支情况的习惯</label><br>
+                    <input type="radio" name="q4" value="1" onclick="app.add6()" checked="checked">是
+                    <input type="radio" name="q4" value="0">否<br>
+                    <label>5、是否对打字培训感兴趣</label><br>
+                    <input type="radio" name="q5" value="1" onclick="app.add6()" checked="checked">是
+                    <input type="radio" name="q5" value="0">否<br>
+
+                    <label>6、是否对参加算盘、文秘等实务培训感兴趣</label><br>
+                    <input type="radio" name="q6" value="1" onclick="app.add6()">是
+                    <input type="radio" name="q6" value="0" checked="checked">否<br>
+                    <label>7、是否对参加商业会计培训感兴趣</label><br>
+                    <input type="radio" name="q7" value="1" onclick="app.add6()">是
+                    <input type="radio" name="q7" value="0" checked="checked">否<br>
+                    <label>8、是否对参加情报处理培训感兴趣</label><br>
+                    <input type="radio" name="q8" value="1" onclick="app.add6()" checked="checked">是
+                    <input type="radio" name="q8" value="0">否<br>
+                    <label>9、是否对整理信件、报告、记录感兴趣</label><br>
+                    <input type="radio" name="q9" value="1" onclick="app.add6()">是
+                    <input type="radio" name="q9" value="0" checked="checked">否<br>
+                    <label>10、是否对写商业贸易信感兴趣</label><br>
+                    <input type="radio" name="q10" value="1" onclick="app.add6()">是
+                    <input type="radio" name="q10" value="0" checked="checked">否<br>
+                    <br>
+                    <input type="button" class="test_jump" onclick="jump6()" value="测试结果">
+
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+            <div id="main" style="width: 600px;height:400px;">
+
+            </div>
+            <!-- <input type="button" class="test_jump"  value="返回首页"> -->
+            <div id="goback">
+                <!-- <input type="button" class="test_jump" value="返回首页"> -->
+                <a href="test.html" class="test_jump btn btn-default btn-lg active">返回首页</a>
+
+
+            </div>
+            <div id="major_infor">
+                <label :key="classText">您属于[{{classText}}]</label><br>
+                <label :key="major_recommendText">建议您选择的专业有[{{major_recommendText}}]</label><br>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var show1 = document.getElementById('show2').style.visibility = "hidden";
+        var show2 = document.getElementById('show3').style.visibility = "hidden";
+        var show3 = document.getElementById('show4').style.visibility = "hidden";
+        var show4 = document.getElementById('show5').style.visibility = "hidden";
+        var show5 = document.getElementById('show6').style.visibility = "hidden";
+        var show6 = document.getElementById('major_infor').style.visibility = "hidden";
+
+        var show_pic = document.getElementById('main').style.visibility = "hidden";
+
+
+        function jump1() {
+            document.getElementById('show1').style.visibility = "hidden";
+
+            document.getElementById('show2').style.visibility = "visible";
+        }
+
+        function jump2() {
+            document.getElementById('show2').style.visibility = "hidden";
+
+            document.getElementById('show3').style.visibility = "visible";
+        }
+
+        function jump3() {
+            document.getElementById('show3').style.visibility = "hidden";
+
+            document.getElementById('show4').style.visibility = "visible";
+        }
+
+        function jump4() {
+            document.getElementById('show4').style.visibility = "hidden";
+
+            document.getElementById('show5').style.visibility = "visible";
+        }
+
+        function jump5() {
+            document.getElementById('show5').style.visibility = "hidden";
+
+            document.getElementById('show6').style.visibility = "visible";
+        }
+
+        function jump6() {
+            document.getElementById('show6').style.visibility = "hidden";
+
+            document.getElementById('main').style.visibility = "visible";
+            document.getElementById('major_infor').style.visibility = "visible";
+
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+                value: [0, 7, 6, 8, 4, 5, 6],
+                max: 0,
+                classText: '',
+                major_recommendText: '',
+                class: ['', '现实型', '研究型', '艺术型', '社会型', '企业型', '常规型'],
+                major_recommend: ['', '工学，农学', '人文社科，理学，医学，农学', '艺术学，农学', '人文社科，医学类', '人文社科，管理学', '管理学，农学']
+
+            },
+            methods: {
+                add1() {
+                    this.value[1] += 1;
+                },
+                add2() {
+                    this.value[2] += 1;
+
+                },
+                add3() {
+                    this.value[3] += 1;
+                },
+                add4() {
+                    this.value[4] += 1;
+                },
+                add5() {
+                    this.value[5] += 1;
+                },
+                add6() {
+                    this.value[6] += 1;
+                }
+            }
+        })
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        //获取数组最大值下标
+        function getMaxIndex(arr) {
+            var max = arr[0];
+            //声明了个变量 保存下标值
+            var index = 0;
+            for (var i = 0; i < arr.length; i++) {
+                if (max < arr[i]) {
+                    max = arr[i];
+                    index = i;
+                }
+            }
+            return index;
+        }
+        // 指定图表的配置项和数据
+        setTimeout(() => {
+            var option = {
+                series: [{
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    roseType: 'angle',
+                    data: [{
+                        value: app.value[1],
+                        name: '现实型'
+                    }, {
+                        value: app.value[2],
+                        name: '研究型'
+                    }, {
+                        value: app.value[3],
+                        name: '艺术型'
+                    }, {
+                        value: app.value[4],
+                        name: '社会型'
+                    }, {
+                        value: app.value[5],
+                        name: '企业型'
+                    }, {
+                        value: app.value[6],
+                        name: '常规型'
+                    }]
+                }]
+
+            };
+            myChart.setOption(option);
+            this.max = getMaxIndex(this.app.value);
+            console.log(this.max)
+            var maxNum = this.max
+                // console.log(this.data.class)
+                // console.log(this.app.major_recommend[2])
+
+            this.app.classText = this.app.class[maxNum];
+            this.app.major_recommendText = this.app.major_recommend[maxNum];
+
+        }, 1000)
+
+        // 使用刚指定的配置项和数据显示图表。
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="vue.min.js"></script>
+    <!-- <script src="vue-resource.min.js"></script> -->
+    <script src="vue-resource.js"></script>
+
+
+    <title>东大高考志愿推荐系统</title>
+    <style>
+        body {
+            background-image: url('picture_sketch.jpg');
+            width: 100%;
+            height: 100%;
+            background-size: 100%;
+        }
+        
+        #log {
+            position: absolute;
+            left: 13%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            /* top: 30px;
+            right: 500px; */
+            background-color: rgb(255, 255, 255);
+            width: 400px;
+            /* height: 500px; */
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            margin-top: 10%;
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #prefer_jump {
+            position: absolute;
+            left: 13%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            /* position: fixed;
+            top: 30px;
+            right: 500px; */
+            background-color: rgb(255, 255, 255);
+            width: 500px;
+            /* height: 600px; */
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            margin-top: 10%;
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #result {
+            position: absolute;
+            left: 13%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            /* position: fixed;
+            top: 30px;
+            right: 500px; */
+            background-color: rgb(255, 255, 255);
+            width: 1150px;
+            /* height: 600px; */
+            border: 3px solid rgb(74, 64, 53);
+            padding: 25px;
+            margin: 25px;
+            margin-top: 10%;
+            margin-left: 37%;
+            border-radius: 25px;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        div.img {
+            border: 1px solid #ccc;
+        }
+        /* .response {
+             padding: 0 6px;
+            float: left;
+            width: 24.99999%; 
+        } */
+        
+        #final_address {
+            width: 65%;
+            float: left;
+            margin-right: 10%;
+        }
+        
+        #preference {
+            font-size: 20px;
+        }
+        
+        .question {
+            font-size: 15px;
+            font-weight: 100;
+        }
+        
+        .question_for {
+            width: 60%;
+        }
+        
+        .dropdown-submenu {
+            position: relative;
+        }
+        
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+            margin-left: -1px;
+            -webkit-border-radius: 0 6px 6px 6px;
+            -moz-border-radius: 0 6px 6px;
+            border-radius: 0 6px 6px 6px;
+        }
+        
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-submenu>a:after {
+            display: block;
+            content: " ";
+            float: right;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            border-left-color: #ccc;
+            margin-top: 5px;
+            margin-right: -10px;
+        }
+        
+        .dropdown-submenu:hover>a:after {
+            border-left-color: #fff;
+        }
+        
+        .dropdown-submenu.pull-left {
+            float: none;
+        }
+        
+        .dropdown-submenu.pull-left>.dropdown-menu {
+            left: -100%;
+            margin-left: 10px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            -moz-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+        }
+    </style>
+</head>
+
+<body body style="overflow-x: auto;overflow-y: auto;">
+    <script>
+        // console.log(localStorage.regionSelected)
+    </script>
+
+    <div id="app">
+        <div class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+                    <a class="navbar-brand" href="#">东南大学</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                        <!-- <li><a href="test3.html">专业库</a></li> -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">专业库 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">哲学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">哲学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">经济学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">经济学类</a></li>
+                                        <li><a tabindex="-1" href="#">财政学类</a></li>
+                                        <li><a tabindex="-1" href="#">金融学类</a></li>
+                                        <li><a tabindex="-1" href="#">经济与贸易类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">法学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">法学类</a></li>
+                                        <li><a tabindex="-1" href="#">政治学类</a></li>
+                                        <li><a tabindex="-1" href="#">社会学类</a></li>
+                                        <li><a tabindex="-1" href="#">民族学类</a></li>
+                                        <li><a tabindex="-1" href="#">马克思主义理论类</a></li>
+                                        <li><a tabindex="-1" href="#">公安学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">教育学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">教育学类</a></li>
+                                        <li><a tabindex="-1" href="#">体育学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">文学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">中国语言文学类</a></li>
+                                        <li><a tabindex="-1" href="#">外国语言文学类</a></li>
+                                        <li><a tabindex="-1" href="#">新闻传播学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">历史学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">历史学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">理学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">数学类</a></li>
+                                        <li><a tabindex="-1" href="#">物理学类</a></li>
+                                        <li><a tabindex="-1" href="#">化学类</a></li>
+                                        <li><a tabindex="-1" href="#">天文学类</a></li>
+                                        <li><a tabindex="-1" href="#">地理科学类</a></li>
+                                        <li><a tabindex="-1" href="#">大气科学类</a></li>
+                                        <li><a tabindex="-1" href="#">海洋科学类</a></li>
+                                        <li><a tabindex="-1" href="#">地球物理学类</a></li>
+                                        <li><a tabindex="-1" href="#">地质学类</a></li>
+                                        <li><a tabindex="-1" href="#">生物科学类</a></li>
+                                        <li><a tabindex="-1" href="#">心理学类</a></li>
+                                        <li><a tabindex="-1" href="#">统计学类</a></li>
+
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">工学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">力学类</a></li>
+                                        <li><a tabindex="-1" href="#">机械类</a></li>
+                                        <li><a tabindex="-1" href="#">仪器类</a></li>
+                                        <li><a tabindex="-1" href="#">民材料类</a></li>
+                                        <li><a tabindex="-1" href="#">能源动力类</a></li>
+                                        <li><a tabindex="-1" href="#">电气类</a></li>
+                                        <li><a tabindex="-1" href="#">电子信息类</a></li>
+                                        <li><a tabindex="-1" href="#">自动化类</a></li>
+                                        <li><a tabindex="-1" href="#">计算机类</a></li>
+                                        <li><a tabindex="-1" href="#">土木类</a></li>
+                                        <li><a tabindex="-1" href="#">水利类</a></li>
+                                        <li><a tabindex="-1" href="#">测绘类</a></li>
+                                        <li><a tabindex="-1" href="#">化工与制药类</a></li>
+                                        <li><a tabindex="-1" href="#">地质类</a></li>
+                                        <li><a tabindex="-1" href="#">矿业类</a></li>
+                                        <li><a tabindex="-1" href="#">纺织类</a></li>
+                                        <li><a tabindex="-1" href="#">轻工类</a></li>
+                                        <li><a tabindex="-1" href="#">交通运输类</a></li>
+                                        <li><a tabindex="-1" href="#">海洋工程类</a></li>
+                                        <li><a tabindex="-1" href="#">航天航空类</a></li>
+                                        <li><a tabindex="-1" href="#">兵器类</a></li>
+                                        <li><a tabindex="-1" href="#">核工程类</a></li>
+                                        <li><a tabindex="-1" href="#">农业工程类</a></li>
+                                        <li><a tabindex="-1" href="#">林业工程类</a></li>
+                                        <li><a tabindex="-1" href="#">环境科学与工程类</a></li>
+                                        <li><a tabindex="-1" href="#">生物医学工程类</a></li>
+                                        <li><a tabindex="-1" href="#">食品安全与工程类</a></li>
+                                        <li><a tabindex="-1" href="#">建筑类</a></li>
+                                        <li><a tabindex="-1" href="#">安全科学与工程类</a></li>
+                                        <li><a tabindex="-1" href="#">生物工程类</a></li>
+                                        <li><a tabindex="-1" href="#">公安技术类</a></li>
+
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"> <a tabindex="-1" href="#">农学</a>
+                                    <ul class="dropdown-menu">
+
+                                        <li><a tabindex="-1" href="#">植物生产类</a></li>
+                                        <li><a tabindex="-1" href="#">自然保护与环境生态类</a></li>
+                                        <li><a tabindex="-1" href="#">动物生产类</a></li>
+                                        <li><a tabindex="-1" href="#">动物医学类</a></li>
+                                        <li><a tabindex="-1" href="#">林学类</a></li>
+                                        <li><a tabindex="-1" href="#">水产类</a></li>
+                                        <li><a tabindex="-1" href="#">草学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">医学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">基础医学类</a></li>
+                                        <li><a tabindex="-1" href="#">临床医学类</a></li>
+                                        <li><a tabindex="-1" href="#">口腔医学类</a></li>
+                                        <li><a tabindex="-1" href="#">公共卫生与预防医学类</a></li>
+                                        <li><a tabindex="-1" href="#">中医学类</a></li>
+                                        <li><a tabindex="-1" href="#">中西医结合类</a></li>
+                                        <li><a tabindex="-1" href="#">药学类</a></li>
+                                        <li><a tabindex="-1" href="#">中药学类</a></li>
+                                        <li><a tabindex="-1" href="#">法医学类</a></li>
+                                        <li><a tabindex="-1" href="#">医学技术类</a></li>
+                                        <li><a tabindex="-1" href="#">护理学类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">管理学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">管理科学与工程类</a></li>
+                                        <li><a tabindex="-1" href="#">工商管理类</a></li>
+                                        <li><a tabindex="-1" href="#">农业经济管理类</a></li>
+                                        <li><a tabindex="-1" href="#">公共管理类</a></li>
+                                        <li><a tabindex="-1" href="#">图书情报与档案管理类</a></li>
+                                        <li><a tabindex="-1" href="#">物流管理与工程类</a></li>
+                                        <li><a tabindex="-1" href="#">工业工程类</a></li>
+                                        <li><a tabindex="-1" href="#">电子商务类</a></li>
+                                        <li><a tabindex="-1" href="#">旅游管理类</a></li>
+                                    </ul>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-submenu"><a tabindex="-1" href="#">艺术学</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">艺术学理论类</a></li>
+                                        <li><a tabindex="-1" href="#">音乐与舞蹈学类</a></li>
+                                        <li><a tabindex="-1" href="#">戏剧与影视学类</a></li>
+                                        <li><a tabindex="-1" href="#">美术学类</a></li>
+                                        <li><a tabindex="-1" href="#">设计学类</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                            <!-- <li><a href="#">院校库</a></li> -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" @click="getSchoolclass">院校库 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu"><a tabindex="-1" href="#">985院校</a>
+                                        <ul class="dropdown-menu">
+                                            <!-- <img src="logo\东南大学.jpg" width="20" height="20" style="display:inline-block;"> -->
+                                            <!-- <li style="display: inline-block;"><a tabindex="-1" href="#">东南大学</a></li> -->
+                                            <li v-for="i in school_class985">{{i}}</li>
+
+                                        </ul>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu"><a tabindex="-1" href="#">211院校</a>
+                                        <ul class="dropdown-menu">
+                                            <!-- <img src="logo\东南大学.jpg" width="20" height="20" style="display:inline-block;"> -->
+                                            <!-- <li style="display: inline-block;"><a tabindex="-1" href="#">东南大学</a></li> -->
+                                            <li v-for="i in school_class211">{{i}}</li>
+
+                                        </ul>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-submenu"><a class="dropdown-submenu" href="#">双一流院校</a>
+                                        <ul class="dropdown-menu">
+                                            <!-- <img src="logo\东南大学.jpg" width="20" height="20" style="display:inline-block;"> -->
+                                            <!-- <li style="display: inline-block;"><a tabindex="-1" href="#">东南大学</a></li> -->
+                                            <li v-for="i in school_class211">{{i}}</li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" @click="getCareer">职业库 <span class="caret"></span></a>
+                                <ul class="dropdown-menu" style="width:700px">
+                                    <!-- <li role="separator" class="divider"></li> -->
+                                    <ul style="display: inline-block;width:200px">
+                                        <li style="list-style:none;">职业</li>
+                                        <li style="list-style:none;" v-for="i in career_info">{{i}}</li>
+                                    </ul>
+                                    <ul style="display: inline-block;width:200px">
+                                        <li style="list-style:none;">平均薪资</li>
+                                        <li style="list-style:none;" v-for="i in career_money">{{i}}</li>
+
+                                    </ul>
+                                    <ul style="display: inline-block;width:200px">
+                                        <li style="list-style:none;">本科就业率</li>
+                                        <li style="list-style:none;" v-for="i in career_percent">{{i}}</li>
+
+                                    </ul>
+                                </ul>
+                            </li>
+                            <li><a href="psychological_test.html">职业性格测试</a>
+                            </li>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="ours.html">关于我们</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="log">
+            <div class="response">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">省份</label>
+                        <select class="form-control">
+                        <option>河南</option>
+                        <option>天津</option>
+                        <option>海南</option>
+                        <option>江苏</option>
+                        <option>陕西</option>
+                        <option>青海</option>
+                        <option>澳门</option>
+                        <option>香港</option>
+                        <option>上海</option>
+                        <option>山西</option>
+                        <option>江西</option>
+                        <option>黑龙江</option>
+                        <option>浙江</option>
+                        <option>贵州</option>
+                        <option>西藏</option>
+                        <option>山东</option>
+                        <option>河北</option>
+                        <option>辽宁</option>
+                        <option>福建</option>
+                        <option>新疆</option>
+                        <option>湖北</option>
+                        <option>湖南</option>
+                        <option>吉林</option>
+                        <option>广东</option>
+                        <option>北京</option>
+                        <option>台湾</option>
+                        <option>重庆</option>
+                        <option>安徽</option>
+                        <option>广西</option>
+                        <option>甘肃</option>
+                        <option>宁夏</option>
+                        <option>云南</option>
+                        <option>四川</option>
+                        <option>内蒙古</option>
+
+                        
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">文理科</label>
+                        <input type="text" class="form-control" placeholder="your class" onclick="class_get()" id="classGet">
+                        <label for="exampleInputPassword1">分数</label>
+                        <input type="number" class="form-control" id="scoreGet" placeholder="your score" onclick="score_get()">
+
+
+                    </div>
+                    <div class="form-group">
+
+                        <label for="exampleInputEmail1">目标省份</label><br>
+
+                        <select class="form-control" id="final_address" value="" onclick="get_province()">
+                        <option>河南</option>
+                        <option>天津</option>
+                        <option>海南</option>
+                        <option>江苏</option>
+                        <option>陕西</option>
+                        <option>青海</option>
+                        <option>澳门</option>
+                        <option>香港</option>
+                        <option>上海</option>
+                        <option>山西</option>
+                        <option>江西</option>
+                        <option>黑龙江</option>
+                        <option>浙江</option>
+                        <option>贵州</option>
+                        <option>西藏</option>
+                        <option>山东</option>
+                        <option>河北</option>
+                        <option>辽宁</option>
+                        <option>福建</option>
+                        <option>新疆</option>
+                        <option>湖北</option>
+                        <option>湖南</option>
+                        <option>吉林</option>
+                        <option>广东</option>
+                        <option>北京</option>
+                        <option>台湾</option>
+                        <option>重庆</option>
+                        <option>安徽</option>
+                        <option>广西</option>
+                        <option>甘肃</option>
+                        <option>宁夏</option>
+                        <option>云南</option>
+                        <option>四川</option>
+                        <option>内蒙古</option>
+                      </select>
+                        <a href="maptest.html" class="btn btn-primary" role="button">地域了解</a>
+
+                    </div>
+                    <div>
+
+                        <!-- btn-lg active -->
+                        <a class="btn btn-default " role="button" id="preference" onclick="preference()">推荐偏好</a>
+                        <br>
+                        <br>
+
+                        <!-- <div class="btn btn-default " @click="start">开始推荐</div><br><br> -->
+                        <div class="btn btn-default " @click="get" onclick="for_the_result()">开始推荐</div><br><br>
+                        <!-- <div class="btn btn-default " @click="get">开始推荐</div><br><br> -->
+                        <!-- <div class="btn btn-default " onclick="for_the_result()" @click="getresult">显示推荐结果</div> -->
+
+
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div id="prefer_jump" style="height: 400px; overflow-y:scroll">
+                <label>关于您的大学-专业偏好选择</label><br>
+                <label class="question">请根据您所认为的各选项的重要程度做出选择</label><br>
+                <label class="question">（数字表示重视程度，按照从1到10依次递增）</label><br>
+                <label class="question">1、对于报考学校和专业的心态：</label><br>
+
+                <div>
+                    <label>
+                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" >
+                      不但要考上这所学校，还要学一个好专业
+                    </label>
+                    <label>
+                      <input type="radio" name="optionsRadios" id="optionsRadios2" value="2">
+                      只要考上学校就行，学什么专业不重要
+                    </label>
+                </div>
+
+
+                <div>
+                    <label class="question">2、对于报考风险的心态：</label><br>
+                    <label>
+                      <input type="radio" name="optionsRadios2"  id="optionsRadios3" value="1" onclick="risk1()">
+                      列出所有可能上榜的学校
+                    </label>
+                    <label>
+                      <input type="radio" name="optionsRadios2"  id="optionsRadios4" value="2" onclick="risk2()">
+                      愿意冒风险，报考更好的学校
+                    </label>
+                    <label>
+                        <input type="radio" name="optionsRadios2"  id="optionsRadios5" value="3" onclick="risk3()">
+                        稳妥起见，报考把握更大的学校
+                    </label>
+                </div>
+
+
+                <label class="question">3、对城市发展的关注度</label><br>
+
+                <select class="form-control question_for" value="0" onclick="city_prefer()" id="city_preferGet">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                
+              </select>
+                <label class="question">4、对专业是否符合自身期待的关注度</label><br>
+
+                <select class="form-control question_for" value="0" onclick="major_prefer()" id="major_preferGet">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                
+              </select>
+                <br>
+                <label class="question">5、感兴趣的专业类别：</label><br>
+
+                <select v-model="PaM" @change="changeP">
+                    <option v-for="pm in ParentMajors" :key="pm" :value="pm">{{pm}}</option>
+                </select>
+                <select v-model="SonM" @change="changeSon">
+                    <option v-for="pm in Majoroptions[PaM]" :key="pm" :value="pm">{{pm}}</option>
+                </select>
+                <!-- <span>{{tranData.seletedMajors}}</span> -->
+                <a class="btn btn-default " role="button" id="log_jump" onclick="log_jump()">选择完成</a>
+
+            </div>
+        </div>
+        <div id="result">
+            <ul style="display: inline-block;width:300px">
+                <li style="list-style:none;">院系</li>
+                <li style="list-style:none;;" v-for="i in prefer_school">{{i}}</li>
+            </ul>
+            <ul style="display: inline-block;width:450px">
+                <li style="list-style:none;">专业</li>
+                <!-- <li style="list-style:none;" v-for="i in career_money">{{i}}</li> -->
+                <li style="list-style:none;" v-for="i in prefer_major">{{i}}</li>
+
+            </ul>
+            <ul style="display: inline-block;width:300px">
+                <li style="list-style:none;">推荐指数</li>
+                <li style="list-style:none;" v-for="i in prefer_score">{{i}}</li>
+
+                <!-- <li style="list-style:none;" v-for="i in career_money">{{i}}</li> -->
+
+            </ul>
+            <a class=" btn btn-default btn-lg active" onclick="returnreturn()">返回</a>
+
+        </div>
+    </div>
+
+    <script>
+        // Vue.use(VueResource)
+        // console.log(Vue.http.post)
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                PaM: '',
+                SonM: '',
+                // class: '',
+                // province: '',
+                // city_prefer: '',
+                // major_prefer: '',
+                // score: 0,
+                // risk: 0,
+                school_class985: [],
+                school_class211: [],
+                school_classtop: [],
+                career_info: [],
+                career_money: [],
+                career_percent: [],
+
+                prefer_school: [],
+                prefer_major: [],
+                prefer_score: [],
+                count: 0,
+                ParentMajors: [
+                    '哲学', '经济学', '法学', '教育学', '文学', '历史学', '理学', '工学', '农学', '医学', '管理学', '艺术学'
+                ],
+                Majoroptions: {
+                    '哲学': ['哲学类'],
+                    '经济学': ['经济学类', '财政学类', '金融学类', '经济与贸易类', '全选'],
+                    '法学': ['法学类', '政治学类', '社会学类', '民族学类', '马克思主义理论类', '公安学类', '全选'],
+                    '教育学': ['教育学类', '体育学类', '全选'],
+                    '文学': ['中国语言文学类', '外国语言文学类', '新闻传播学类', '全选'],
+                    '历史学': ['历史学类'],
+                    '理学': ['数学类', '物理学类', '化学类', '天文学类', '地理科学类', '大气科学类', '海洋科学类', '地球物理学类', '地质学类', '生物科学类', '心理学类', '统计学类', '全选'],
+                    '工学': ['力学类', '机械类', '仪器类', '材料类', '能源动力类', '电气类', '电子信息类', '自动化类', '计算机类', '土木类', '水利类', '测绘类', '化工与制药类', '地质类', '矿业类', '纺织类', '轻工类', '交通运输类', '海洋工程类', '航空航天类', '兵器类', '核工程类', '农业工程类', '林业工程类', '环境科学与工程类', '生物医学工程类', '食品科学与工程类', '建筑类', '安全科学与工程类', '生物工程类', '公安技术类', '全选'],
+                    '农学': ['植物生产类', '自然环境与环境生态类', '动物生产类', '动物医学类', '林学类', '水产类草学类'],
+                    '医学': ['基础医学类', '临床医学类', '口腔医学类', '公共卫生与预防医学类', '中医学类', '中西医结合类药学类', '中药学类', '法医学类', '医学技术类', '护理学类', '全选'],
+                    '管理学': ['管理科学与工程类', '工商管理类', '农业经济管理类', '公共管理类', '图书情报与档案管理类', '物流管理与工程类', '工业工程类', '电子商务类', '旅游管理类', '全选'],
+                    '艺术学': ['艺术学理论类', '音乐与舞蹈学类', '戏剧与影视学类', '美术学类', '设计学类', '全选']
+                },
+                tempdata: ['', ''],
+                tranData: {
+                    classChoose: '',
+                    score: 0,
+                    province: '',
+                    seletedMajors: [],
+                    city_prefer: '',
+                    major_prefer: '',
+                    risk: 0
+                }
+            },
+            methods: {
+
+                changeSon() {
+                    console.log(this.tempdata[1])
+
+                    if (this.tempdata[1] == "全选") {
+                        this.tempdata[1] = '';
+                        // console.log(this.tempdata[1])
+                    };
+
+                    this.tempdata[1] = this.SonM
+                    const temp = this.tempdata.concat()
+                    this.tranData.seletedMajors.push(temp)
+                        // this.tranData.seletedMajors = this.tranData.seletedMajors.concat(temp)
+                    console.log(this.tranData.seletedMajors)
+
+                },
+                changeP() {
+                    this.tempdata[0] = this.PaM
+                },
+                // start: async() => {
+                //     // url = 'http://10.208.156.214:8000/test_final/'
+                //     //     // url = 'http://10.208.156.214:8000'
+                //     //     // print(this.$store)
+                //     // console.log('aasas' + this)
+                //     // console.log(Vue)
+
+                //     console.log(this.app.tranData)
+                //         // const data = await Vue.http.post('http://10.208.156.214:8000/test_final/', JSON.stringify(this.app.tranData))
+                //         // console.log(data)
+
+                //     const res = await Vue.http.get('http://10.208.156.214:8000/test_final/', JSON.stringify(this.app.tranData))
+                //     console.log(res)
+                //         // console.log(res.status)
+
+                //     // const data = res.data
+                // }
+                start: function() {
+                    var url = 'http://10.208.156.214:8000/recommender/'
+                    $.get(url, this.tranData)
+                        // $.get(url, this.tranData)
+                        // console.log(data)
+                        // this.$http.get(url).then(
+                        //     function(data) {
+                        //         console.log(data)
+                        //             // console.log(data.body.college)
+                        //             // db_data = data["data"]["data"]
+                        //     },
+                        //     function(error) {
+                        //         console.log(error)
+                        //     }
+                        // )
+
+
+                },
+
+
+                get: function() {
+                    // var url = 'http://10.208.156.214:8000/test_final/'
+                    var url = 'http://10.208.156.214:8000/recommender/'
+
+                    // const data = $.get(url, this.tranData)
+                    // console.log(data)
+                    // document.getElementById('log').style.visibility = "hidden";
+                    // document.getElementById('result').style.visibility = "visible";
+
+                    // $.get(url, this.tranData)
+                    //params
+                    // {
+                    //     params: {
+                    //         page: this.page,
+                    //         rows: this.rows
+                    //     }
+                    // }, {
+                    //     emulateJSON: true
+                    // }
+                    // $.get(url, this.tranData)
+                    // JSON.stringify(this.tranData)
+                    this.$http.get(url, {
+                        params: this.tranData
+                    }).then(
+                        function(data) {
+                            console.log(data)
+                                // console.log(data.body.college)
+                                // db_data = data["data"]["data"]
+                            for (let i = 0; i < data.body.recommend_result.length; i++) {
+                                this.prefer_school.push(data.body.recommend_result[i][2])
+                                this.prefer_major.push(data.body.recommend_result[i][3])
+                                this.prefer_score.push(data.body.recommend_result[i][5])
+
+                            };
+                        },
+                        function(error) {
+                            console.log(error)
+                        }
+                    )
+
+                },
+                getCareer: function() {
+                    // var url = 'http://10.208.156.214:8000/test_final/'
+                    var url = 'http://10.208.156.214:8000/major_info/'
+
+                    // const data = $.get(url, this.tranData)
+                    // console.log(data)
+                    // document.getElementById('log').style.visibility = "hidden";
+                    // document.getElementById('result').style.visibility = "visible";
+
+
+                    this.$http.get(url).then(
+                        function(data) {
+                            console.log(data)
+                            console.log(data.body.major_info)
+                            for (let i = 0; i < data.body.major_info.length; i++) {
+                                this.career_info.push(data.body.major_info[i][0])
+                                this.career_money.push(data.body.major_info[i][1])
+                                this.career_percent.push(data.body.major_info[i][2])
+
+                            };
+                            db_data = data["data"]["data"]
+                        },
+                        function(error) {
+                            console.log(error)
+                        }
+                    )
+
+                },
+                getSchoolclass: function() {
+                    // var url = 'http://10.208.156.214:8000/test_final/'
+                    var url = 'http://10.208.156.214:8000/college_info/'
+
+                    // const data = $.get(url, this.tranData)
+                    // console.log(data)
+                    // document.getElementById('log').style.visibility = "hidden";
+                    // document.getElementById('result').style.visibility = "visible";
+
+
+                    this.$http.get(url).then(
+                        function(data) {
+                            console.log(data)
+                            console.log(data.body.college_info)
+                            for (let i = 0; i < data.body.college_info.length; i++) {
+                                if (data.body.college_info[i][2] == 1) {
+                                    this.school_class985.push(data.body.college_info[i][1])
+                                }
+                            };
+                            for (let i = 0; i < data.body.college_info.length; i++) {
+                                if (data.body.college_info[i][3] == 1) {
+                                    this.school_class211.push(data.body.college_info[i][1])
+                                }
+                            };
+                            for (let i = 0; i < data.body.college_info.length; i++) {
+                                if (data.body.college_info[i][4] == 1) {
+                                    this.school_classtop.push(data.body.college_info[i][1])
+                                }
+                            };
+
+                            console.log(this.school_class985)
+                                // this.school_class985 = data.body.college_info
+                                // this.school_class211 = data.body.college_info
+                                // this.school_classtop = data.body.college_info
+
+                            // console.log(data.body.college)
+                            db_data = data["data"]["data"]
+                        },
+                        function(error) {
+                            console.log(error)
+                        }
+                    )
+
+
+                }
+            }
+        })
+
+        function for_the_result() {
+            document.getElementById('log').style.visibility = "hidden";
+
+            document.getElementById('result').style.visibility = "visible";
+
+
+        }
+
+        function returnreturn() {
+            document.getElementById('log').style.visibility = "visible";
+
+            document.getElementById('result').style.visibility = "hidden";
+
+
+        }
+
+        function class_get() {
+            app.tranData.classChoose = document.getElementById('classGet').value;
+            console.log(app.tranData.classChoose);
+        };
+
+        function score_get() {
+            app.tranData.score = document.getElementById('scoreGet').value;
+            console.log(app.tranData.score);
+        };
+
+        function get_province() {
+            app.tranData.province = document.getElementById('final_address').value;
+            console.log(app.tranData.province);
+        };
+
+        function risk1() {
+            app.tranData.risk = 1;
+            console.log(app.tranData.risk);
+        };
+
+        function risk2() {
+            app.tranData.risk = 2;
+            console.log(app.tranData.risk);
+        };
+
+        function risk3() {
+            app.tranData.risk = 3;
+            console.log(app.tranData.risk);
+        };
+
+        function city_prefer() {
+            app.tranData.city_prefer = document.getElementById('city_preferGet').value;
+            console.log(app.tranData.city_prefer);
+
+        };
+
+        function major_prefer() {
+            app.tranData.major_prefer = document.getElementById('major_preferGet').value;
+            console.log(app.tranData.major_prefer);
+
+        };
+    </script>
+
+    <script>
+        document.getElementById('result').style.visibility = "hidden";
+
+        document.getElementById('prefer_jump').style.visibility = "hidden";
+
+        document.getElementById("final_address").value = localStorage.province;
+        var test = localStorage.province;
+        console.log(test);
+
+
+
+        function preference() {
+            document.getElementById('log').style.visibility = "hidden";
+            document.getElementById('prefer_jump').style.visibility = "visible";
+        }
+
+        function log_jump() {
+            document.getElementById('log').style.visibility = "visible";
+            document.getElementById('prefer_jump').style.visibility = "hidden";
+        }
+    </script>
+
+
+</body>
+
+</html>
